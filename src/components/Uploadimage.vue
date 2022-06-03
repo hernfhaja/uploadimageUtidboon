@@ -1,5 +1,5 @@
 <template>
-  <div class="uploadImage">
+  <div class="bg-cover bg-gradient-to-l from-cyan-200 to-blue-400 ... h-screen">
     <!-- popup -->
     <div
       v-if="uploadValue == 100"
@@ -21,7 +21,7 @@
     </div>
 
     <!-- topic -->
-    <div class="shadow-xl flex flex-col justify-center mt-10 p-3 rounded-xl">
+    <div class="shadow-xl flex flex-col justify-center pt-10 p-3 rounded-xl">
       <h1 class="drop-shadow-xl text-4xl text-center text-yellow-300">
         ส่งรูป พิธีอุทิศบุญ
       </h1>
@@ -46,7 +46,9 @@
     </div>
 
     <div class="flex flex-col justify-center">
-      <img id="uploadPreview" class="pt-10 px-3" />
+      <div class="flex justify-center">
+        <img id="uploadPreview" class="pt-10 px-3 w-3/5" />
+      </div>
       <div v-if="imageData != null" class="flex justify-center">
         <button
           @click="onUpload"
