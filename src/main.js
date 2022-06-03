@@ -3,13 +3,12 @@ import App from "./App.vue";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import "./index.css";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+Vue.config.productionTip = false;
+
 const firebaseConfig = {
   apiKey: "AIzaSyDXSRRTiIEF_zfqjc-wrD_Hg6pLKo6DxCU",
   authDomain: "uploadimage-11541.firebaseapp.com",
@@ -24,9 +23,16 @@ const firebaseConfig = {
 /* eslint-disable */
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const auth = getAuth(app);
 const storage = getStorage(app);
 
-Vue.config.productionTip = false;
+export default {
+  components: {},
+  app,
+  analytics,
+  auth,
+  storage,
+};
 
 new Vue({
   render: (h) => h(App),
