@@ -119,12 +119,12 @@ export default {
       let storageRef = this.storageRef;
       let uploadTask = this.uploadTask;
 
-      storageRef = ref(storage, `${file.name}`);
-      uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
       const metadata = {
         contentType: "image/jpeg",
       };
+
+      storageRef = ref(storage, `${file.name}`);
+      uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
       console.log(storage);
 
