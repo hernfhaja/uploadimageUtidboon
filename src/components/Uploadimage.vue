@@ -95,6 +95,7 @@ export default {
       clicksend: null,
       progress: { incomplete: "ดำเนินการ", complete: "ส่งรูปสำเร็จ" },
       sendcomplete: null,
+      uploadTask: null,
     };
   },
 
@@ -115,8 +116,11 @@ export default {
     onUpload(e) {
       const file = this.imageData;
       const storage = this.storage;
-      const storageRef = ref(storage, `${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+      let storageRef = this.storageRef;
+      let uploadTask = this.uploadTask;
+
+      storageRef = ref(storage, `${file.name}`);
+      uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
       const metadata = {
         contentType: "image/jpeg",
