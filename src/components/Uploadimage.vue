@@ -1,6 +1,6 @@
 <template>
   <div class="UploadImage">
-    <h1 class="text-xm">Upload Images</h1>
+    <h1 class="text-red-500">Upload Images</h1>
   </div>
 </template>
 
