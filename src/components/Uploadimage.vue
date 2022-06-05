@@ -1,19 +1,32 @@
 <template>
-  <div class="bg-cover bg-gradient-to-l from-cyan-200 to-blue-400 ... h-screen">
+  <div class="bg-cover">
     <!-- popup -->
     <div
       v-if="uploadValue == 100"
       class="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 p-5"
     >
-      <div class="bg-white px-10 py-10 rounded-md text-center">
+      <div class="bg-white px-10 py-16 rounded-md text-center mt-10">
         <h1 class="text-xl mb-4 font-bold text-gray-600">ส่งรูปสำเร็จ</h1>
         <p class="mb-5 text-gray-600">
           ร่วมสวดธรรมจักรทุกวัน และ ร่วมพิธีอุทิศบุญในทุกวันพระ ได้ที่ <br />
           " เพจธรรมล้านดวง " เวลา 20.02 น.
         </p>
+        <div class="flex flex-row justify-between mt-5 p-1 mb-5">
+          <a href="https://web.facebook.com/dhamma1000000" class="text-sm"
+            ><img src="../assets/Facebook_Logo.png" class="w-12"
+          /></a>
+          <a
+            href="https://www.youtube.com/channel/UC1Bh6OuSHBJnlt3vZd6hsUQ"
+            class=""
+            ><img src="../assets/Youtube-logo-png.png" class="w-20"
+          /></a>
+          <a href="https://www.boon123.com/"
+            ><img src="../assets/zoom-logo.png" class="w-14"
+          /></a>
+        </div>
         <button
           @click="reloadPage"
-          class="bg-indigo-500 px-4 py-2 rounded-md text-md text-white"
+          class="bg-yellow-300 px-4 py-2 rounded-md text-md font-bold text-gray-800"
         >
           ส่งรูปอีกครั้ง
         </button>
@@ -21,27 +34,33 @@
     </div>
 
     <!-- topic -->
-    <div class="shadow-xl flex flex-col justify-center pt-10 p-3 rounded-xl">
-      <h1 class="drop-shadow-xl text-4xl text-center text-yellow-300">
-        ส่งรูป พิธีอุทิศบุญ
-      </h1>
-      <h1 class="text-3xl text-color-dms text-center outline-title">
+    <div class="flex flex-col justify-center pt-8 pb-6 bg-topic">
+      <h1 class="text-5xl text-center font-charm">ส่งรูป พิธีอุทิศบุญ</h1>
+    </div>
+    <div>
+      <h1
+        class="text-xl text-center mt-3 font-thasadith font-bold text-amber-900"
+      >
         เพจธรรมล้านดวง
       </h1>
+      <img src="../assets/section.png" class="mt-3" />
     </div>
 
     <!-- input file -->
     <div class="pt-20 flex flex-col justify-center">
-      <p class="text-center">กรุณากดที่ปุ่ม เพื่อเลือกรูป</p>
-      <div class="pt-3 flex justify-center">
-        <input
-          id="uploadImage"
-          class="px-20 justify-self-center pt-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-100 file:text-yellow-800 hover:file:bg-yellow-100"
-          type="file"
-          @change="previewImage"
-          accept="image/*"
-          style="content: 'test'"
-        />
+      <p class="text-center h-10">กรุณากดที่ปุ่ม เพื่อเลือกรูป</p>
+      <div class="flex justify-center">
+        <label
+          class="custom-file-upload p-5 px-20 rounded-xl text-3xl font-saraban font-bold"
+        >
+          <input
+            id="uploadImage"
+            type="file"
+            @change="previewImage"
+            accept="image/*"
+          />
+          เลือกรูป
+        </label>
       </div>
     </div>
 
@@ -52,7 +71,7 @@
       <div v-if="imageData != null" class="flex justify-center">
         <button
           @click="onUpload"
-          class="p-3 shadow-xl mt-10 font-bold text-xl text-yellow-700 bg-yellow-200 rounded-full"
+          class="p-3 shadow-xl mt-10 font-bold text-xl text-yellow-700 bg-yellow-200 rounded-full border-2"
         >
           กดส่งรูปภาพ
         </button>
@@ -60,7 +79,7 @@
     </div>
 
     <div v-if="imageData != null" class="flex flex-row justify-center pt-10">
-      <p v-if="imageData != 100" class="text-xs shadow-xl">
+      <p v-if="imageData != 100" class="text-xs shadow-xl mb-10">
         {{ !sendcomplete ? progress.incomplete : progress.complete }} :
         {{ uploadValue.toFixed() + "%" }}
         <progress
@@ -187,4 +206,32 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+input[type="file"] {
+  display: none;
+}
+
+.section-line-bg {
+  background-image: url("../assets/section.png");
+}
+.bg-topic {
+  background-image: url("../assets/head-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.button-image-golden {
+  background-image: url("../assets/btn-bg.png");
+  object-fit: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100px;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  background-image: url("../assets/btn-bg.png");
+  background-size: cover;
+}
+</style>

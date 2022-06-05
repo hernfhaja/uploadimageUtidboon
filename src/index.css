@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "charm";
+  src: url("../public/font/Charm/Charm-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Thasadith";
+  src: url("../public/font/Thasadith/Thasadith-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Saraban";
+  src: url("../public/font/Sarabun/Sarabun-Regular.ttf");
+}
