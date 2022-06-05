@@ -96,7 +96,7 @@
     <!-- preview img -->
     <div class="flex flex-col justify-center">
       <div class="flex justify-center">
-        <img id="uploadPreview" class="pt-5 px-3 w-3/5" />
+        <img id="uploadPreview" class="pt-5 px-3 w-3/5 max-h-screen" />
       </div>
       <div v-if="imageData != null" class="flex justify-center">
         <button
