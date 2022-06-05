@@ -47,7 +47,7 @@
     </div>
 
     <!-- input file -->
-    <div class="pt-20 flex flex-col justify-center">
+    <div v-if="imageData == null" class="pt-10 flex flex-col justify-center">
       <p class="text-center h-10">กรุณากดที่ปุ่ม เพื่อเลือกรูป</p>
       <div class="flex justify-center">
         <label
@@ -64,9 +64,38 @@
       </div>
     </div>
 
+    <div
+      v-if="imageData != null"
+      class="pt-5 flex flex-row justify-center space-x-3"
+    >
+      <p class="align-middle pt-2">เปลี่ยนรูป</p>
+      <div class="flex justify-center">
+        <label class="custom-file-upload p-2 rounded-xl">
+          <input
+            id="uploadImage"
+            type="file"
+            @change="previewImage"
+            accept="image/*"
+          />
+          เลือกรูป
+        </label>
+      </div>
+      <button
+        class="bg-red-600 p-2 rounded-xl text-gray-50"
+        @click="
+          () => {
+            this.picture = null;
+            this.imageData = null;
+          }
+        "
+      >
+        ยกเลิก
+      </button>
+    </div>
+
     <div class="flex flex-col justify-center">
       <div class="flex justify-center">
-        <img id="uploadPreview" class="pt-10 px-3 w-3/5" />
+        <img id="uploadPreview" class="pt-5 px-3 w-3/5" />
       </div>
       <div v-if="imageData != null" class="flex justify-center">
         <button
