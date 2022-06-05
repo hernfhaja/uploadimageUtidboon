@@ -64,11 +64,11 @@
       </div>
     </div>
 
+    <!-- chang + cancle buton -->
     <div
       v-if="imageData != null"
       class="pt-5 flex flex-row justify-center space-x-3"
     >
-      <p class="align-middle pt-2">เปลี่ยนรูป</p>
       <div class="flex justify-center">
         <label class="custom-file-upload p-2 rounded-xl">
           <input
@@ -77,7 +77,7 @@
             @change="previewImage"
             accept="image/*"
           />
-          เลือกรูป
+          เปลี่ยนรูป
         </label>
       </div>
       <button
@@ -93,6 +93,7 @@
       </button>
     </div>
 
+    <!-- preview img -->
     <div class="flex flex-col justify-center">
       <div class="flex justify-center">
         <img id="uploadPreview" class="pt-5 px-3 w-3/5" />
