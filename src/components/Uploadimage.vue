@@ -3,15 +3,15 @@
     <!-- popup -->
     <div
       v-if="uploadValue == 100"
-      class="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 p-5"
+      class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center p-5 bg-opacity-50 bg-slate-800"
     >
-      <div class="bg-white px-10 py-16 rounded-md text-center mt-10">
-        <h1 class="text-xl mb-4 font-bold text-gray-600">ส่งรูปสำเร็จ</h1>
+      <div class="px-10 py-16 mt-10 text-center bg-white rounded-md">
+        <h1 class="mb-4 text-xl font-bold text-gray-600">ส่งรูปสำเร็จ</h1>
         <p class="mb-5 text-gray-600">
           ร่วมสวดธรรมจักรทุกวัน และ ร่วมพิธีอุทิศบุญในทุกวันพระ ได้ที่ <br />
           " เพจธรรมล้านดวง " เวลา 20.02 น.
         </p>
-        <div class="flex flex-row justify-between mt-5 p-1 mb-5">
+        <div class="flex flex-row justify-between p-1 mt-5 mb-5">
           <a href="https://web.facebook.com/dhamma1000000" class="text-sm"
             ><img src="../assets/Facebook_Logo.png" class="w-12"
           /></a>
@@ -26,7 +26,7 @@
         </div>
         <button
           @click="reloadPage"
-          class="bg-yellow-300 px-4 py-2 rounded-md text-md font-bold text-gray-800"
+          class="px-4 py-2 font-bold text-gray-800 bg-yellow-300 rounded-md text-md"
         >
           ส่งรูปอีกครั้ง
         </button>
@@ -39,19 +39,33 @@
     </div>
     <div>
       <h1
-        class="text-xl text-center mt-3 font-thasadith font-bold text-amber-900"
+        class="mt-3 text-xl font-bold text-center font-thasadith text-amber-900"
       >
         เพจธรรมล้านดวง
       </h1>
       <img src="../assets/section.png" class="mt-3" />
     </div>
 
+    <!-- input textarea -->
+    <div class="flex justify-center mt-10">
+      <p class="text-center">
+        กรุณากรอก <br />
+        ชื่อ-นามสกุล (ผู้ส่ง)
+      </p>
+      <input
+        placeholder=""
+        v-model="senderName"
+        type="text"
+        class="px-4 mx-5 rounded-lg"
+      />
+    </div>
+
     <!-- input file -->
-    <div v-if="imageData == null" class="pt-10 flex flex-col justify-center">
-      <p class="text-center h-10">กรุณากดที่ปุ่ม เพื่อเลือกรูป</p>
+    <div v-if="imageData == null" class="flex flex-col justify-center pt-10">
+      <p class="h-10 text-center">กรุณากดที่ปุ่ม เพื่อเลือกรูป</p>
       <div class="flex justify-center">
         <label
-          class="custom-file-upload p-5 px-20 rounded-xl text-3xl font-saraban font-bold"
+          class="p-5 px-20 text-3xl font-bold custom-file-upload rounded-xl font-saraban"
         >
           <input
             id="uploadImage"
@@ -67,10 +81,10 @@
     <!-- chang + cancle buton -->
     <div
       v-if="imageData != null"
-      class="pt-5 flex flex-row justify-center space-x-3"
+      class="flex flex-row justify-center pt-5 space-x-3"
     >
       <div class="flex justify-center">
-        <label class="custom-file-upload p-2 rounded-xl">
+        <label class="p-2 custom-file-upload rounded-xl">
           <input
             id="uploadImage"
             type="file"
@@ -81,7 +95,7 @@
         </label>
       </div>
       <button
-        class="bg-red-600 p-2 rounded-xl text-gray-50"
+        class="p-2 bg-red-600 rounded-xl text-gray-50"
         @click="
           () => {
             this.picture = null;
@@ -96,12 +110,12 @@
     <!-- preview img -->
     <div class="flex flex-col justify-center">
       <div class="flex justify-center">
-        <img id="uploadPreview" class="pt-5 px-3 w-3/5 max-h-screen" />
+        <img id="uploadPreview" class="w-3/5 max-h-screen px-3 pt-5" />
       </div>
       <div v-if="imageData != null" class="flex justify-center">
         <button
           @click="onUpload"
-          class="p-3 shadow-xl mt-10 font-bold text-xl text-yellow-700 bg-yellow-200 rounded-full border-2"
+          class="p-3 mt-10 text-xl font-bold text-yellow-700 bg-yellow-200 border-2 rounded-full shadow-xl"
         >
           กดส่งรูปภาพ
         </button>
@@ -109,7 +123,7 @@
     </div>
 
     <div v-if="imageData != null" class="flex flex-row justify-center pt-10">
-      <p v-if="imageData != 100" class="text-xs shadow-xl mb-10">
+      <p v-if="imageData != 100" class="mb-10 text-xs shadow-xl">
         {{ !sendcomplete ? progress.incomplete : progress.complete }} :
         {{ uploadValue.toFixed() + "%" }}
         <progress
@@ -147,6 +161,7 @@ export default {
       progress: { incomplete: "ดำเนินการ", complete: "ส่งรูปสำเร็จ" },
       sendcomplete: null,
       uploadTask: null,
+      senderName: "",
     };
   },
 
@@ -167,12 +182,15 @@ export default {
     onUpload(e) {
       const file = this.imageData;
       const storage = this.storage;
+      const senderName = this.senderName;
       let storageRef = this.storageRef;
       let uploadTask = this.uploadTask;
 
       const metadata = {
         contentType: "image/jpeg",
       };
+
+      console.log(senderName);
 
       storageRef = ref(storage, `${file.name}`);
       uploadTask = uploadBytesResumable(storageRef, file, metadata);
