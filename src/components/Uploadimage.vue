@@ -138,17 +138,38 @@
 </template>
 
 <script>
+import { initializeApp } from "firebase/app";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+/* eslint-disable */
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+  Timestamp,
+} from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDXSRRTiIEF_zfqjc-wrD_Hg6pLKo6DxCU",
+  authDomain: "uploadimage-11541.firebaseapp.com",
+  projectId: "uploadimage-11541",
+  storageBucket: "uploadimage-11541.appspot.com",
+  messagingSenderId: "939362557510",
+  appId: "1:939362557510:web:312f367ffd871f4c933447",
+  measurementId: "G-HXSC5FJ62K",
+};
 
 export default {
   name: "UploadImage",
   data() {
     return {
+      app: initializeApp(firebaseConfig),
       imageData: null,
       picture: null,
       uploadValue: 0,
@@ -162,6 +183,7 @@ export default {
       sendcomplete: null,
       uploadTask: null,
       senderName: "",
+      db: null,
     };
   },
 
@@ -182,20 +204,19 @@ export default {
     onUpload(e) {
       const file = this.imageData;
       const storage = this.storage;
-      const senderName = this.senderName;
+      const app = this.app;
       let storageRef = this.storageRef;
       let uploadTask = this.uploadTask;
+      let db = this.db;
+
+      db = getFirestore(app);
 
       const metadata = {
         contentType: "image/jpeg",
       };
 
-      console.log(senderName);
-
-      storageRef = ref(storage, `${file.name}`);
+      storageRef = ref(storage, this.senderName + `${file.name}`);
       uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-      console.log(storage);
 
       this.clicksend = e;
 
@@ -243,12 +264,30 @@ export default {
             console.log("File available at", downloadURL);
             this.sendcomplete = 1;
             this.picture = downloadURL;
+
+            this.uptoDatabase(db);
           });
         }
       );
     },
     reloadPage() {
       window.location.reload();
+    },
+    /* eslint-disable */
+    async uptoDatabase(db) {
+      try {
+        const col = collection(db, "users");
+        const timelapsed = Date.now();
+
+        const docRef = await addDoc(col, {
+          name: this.senderName,
+          picUrl: this.picture,
+          timestamp: Timestamp.fromDate(new Date(timelapsed)),
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     },
   },
 };
