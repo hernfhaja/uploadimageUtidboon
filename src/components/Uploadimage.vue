@@ -47,17 +47,34 @@
     </div>
 
     <!-- input textarea -->
-    <div class="flex justify-center mt-10">
-      <p class="text-center">
-        กรุณากรอก <br />
-        ชื่อ-นามสกุล (ผู้ส่ง)
-      </p>
-      <input
-        placeholder=""
-        v-model="senderName"
-        type="text"
-        class="px-4 mx-5 rounded-lg"
-      />
+    <div class="flex flex-col justify-center mt-10">
+      <!-- input textarea 1 -->
+      <div class="flex justify-left">
+        <p class="flex-1 text-center">
+          กรุณากรอก <br />
+          ชื่อ-นามสกุล<br />
+          (ผู้ส่ง)
+        </p>
+        <input
+          placeholder=""
+          v-model="senderName"
+          type="text"
+          class="flex-1 h-12 px-4 mx-5 rounded-lg"
+        />
+      </div>
+      <!-- input textarea 2 -->
+      <div class="flex mt-5 justify-left">
+        <p class="flex-1 text-center">
+          ชื่อ-นามสกุล<br />
+          (ผู้วายชน)
+        </p>
+        <input
+          placeholder=""
+          v-model="name"
+          type="text"
+          class="flex-1 h-12 px-4 mx-5 rounded-lg"
+        />
+      </div>
     </div>
 
     <!-- input file -->
@@ -72,6 +89,7 @@
             type="file"
             @change="previewImage"
             accept="image/*"
+            multiple
           />
           เลือกรูป
         </label>
@@ -112,6 +130,7 @@
       <div class="flex justify-center">
         <img id="uploadPreview" class="w-3/5 max-h-screen px-3 pt-5" />
       </div>
+
       <div v-if="imageData != null" class="flex justify-center">
         <button
           @click="onUpload"
@@ -155,6 +174,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
+const axios = require("axios");
 const firebaseConfig = {
   apiKey: "AIzaSyDXSRRTiIEF_zfqjc-wrD_Hg6pLKo6DxCU",
   authDomain: "uploadimage-11541.firebaseapp.com",
@@ -170,6 +190,7 @@ export default {
   data() {
     return {
       app: initializeApp(firebaseConfig),
+      images: [],
       imageData: null,
       picture: null,
       uploadValue: 0,
@@ -184,6 +205,7 @@ export default {
       uploadTask: null,
       senderName: "",
       db: null,
+      name: "",
     };
   },
 
@@ -195,14 +217,13 @@ export default {
       oFReader.onload = function (oFREvent) {
         document.getElementById("uploadPreview").src = oFREvent.target.result;
       };
-
       this.uploadValue = 0;
       this.picture = event.file;
       this.imageData = event.target.files[0];
     },
 
     onUpload(e) {
-      const file = this.imageData;
+      const file = this.imageDaata;
       const storage = this.storage;
       const app = this.app;
       let storageRef = this.storageRef;
@@ -284,6 +305,23 @@ export default {
           picUrl: this.picture,
           timestamp: Timestamp.fromDate(new Date(timelapsed)),
         });
+
+        axios({
+          method: "post",
+          url: "https://utidboon.herokuapp.com/",
+          data: {
+            sendername: this.senderName,
+            name: this.name,
+            imgurl: this.picture,
+          },
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
         console.log("Document written with ID: ", docRef.id);
       } catch (e) {
         console.error("Error adding document: ", e);
