@@ -75,6 +75,42 @@
           class="flex-auto h-12 px-4 mx-5 rounded-lg"
         />
       </div>
+      <div class="flex mt-5 justify-left">
+        <p class="flex-1 text-center">
+          ชื่อ-นามสกุล<br />
+          (ผู้วายชนม์)
+        </p>
+        <input
+          placeholder=""
+          v-model="diename"
+          type="text"
+          class="flex-auto h-12 px-4 mx-5 rounded-lg"
+        />
+      </div>
+      <div class="flex mt-5 justify-left">
+        <p class="flex-1 text-center">
+          ชื่อ-นามสกุล<br />
+          (ผู้วายชนม์)
+        </p>
+        <input
+          placeholder=""
+          v-model="diename"
+          type="text"
+          class="flex-auto h-12 px-4 mx-5 rounded-lg"
+        />
+      </div>
+      <div class="flex mt-5 justify-left">
+        <p class="flex-1 text-center">
+          ชื่อ-นามสกุล<br />
+          (ผู้วายชนม์)
+        </p>
+        <input
+          placeholder=""
+          v-model="diename"
+          type="text"
+          class="flex-auto h-12 px-4 mx-5 rounded-lg"
+        />
+      </div>
     </div>
 
     <div class="flex justify-center">
